@@ -2,6 +2,7 @@ const connectDb = require("./database");
 const express = require("express");
 const app = express();
 const userRoutes = require("./api/users/users.routes");
+const ingredientRoutes = require("./api/ingredients/ingredients.routes");
 const categoriesRoutes = require("./api/categories/categories.routes");
 const passport = require("passport");
 const cors = require("cors");
@@ -14,6 +15,7 @@ app.use(passport.initialize());
 passport.use(localStrategy);
 passport.use(jwtStrategy);
 app.use(userRoutes);
+app.use(ingredientRoutes);
 app.use(categoriesRoutes);
 
 app.use((req, res, next) => {
