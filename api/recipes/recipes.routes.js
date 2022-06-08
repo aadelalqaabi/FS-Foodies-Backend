@@ -2,9 +2,22 @@ const express = require("express");
 const passport = require("passport");
 const router = express.Router();
 
-const { fetchRecipes, createRecipes } = require("./recipes.controller");
+const { fetchRecipes, getRecipes, ingredientAdd, createIngredient } = require("./recipes.controller");
 
-router.get("/recipes", fetchRecipes);
-router.post("/createRecipes", createRecipes);
+router.param("recipeId", async (req, res, next, recipeId) => {
+    const recipe = await fetchRecipes(recipeId, next);
+    if (recipe) {
+      req.recipe = recipe;
+      next();
+    } else {
+      const err = new Error("Recipe Not Found");
+      err.status = 404;
+      next(err);
+    }
+});
+
+router.post("/recipes/ingredient", createIngredient);
+router.put("/:recipeId/ingredients/:ingredientId", ingredientAdd);
+router.get("/recipes", getRecipes);
 
 module.exports = router;
