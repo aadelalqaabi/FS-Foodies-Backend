@@ -1,19 +1,19 @@
 const User = require("../../models/User");
 const Ingredient = require("../../models/Ingredient");
 
-exports.createIngredient = async (req, res, next) => {
+exports.getIngredients = async (req, res, next) => {
     try {
-        const newIngredient = await Ingredient.create(req.body);
-        res.status(201).json(newIngredient);
+        const ingredient = await Ingredient.find();
+        res.status(200).json(ingredient);
     } catch (error) {
         next(error);
     }
 };
 
-exports.getIngredients = async (req, res, next) => {
+exports.fetchIngredient = async (ingredientId, next) => {
     try {
-        const ingredient = await Ingredient.find();
-        res.status(200).json(ingredient);
+        const ingredient = await Ingredient.findById(ingredientId);
+        return ingredient;
     } catch (error) {
         next(error);
     }
