@@ -1,9 +1,23 @@
 const Category = require("../../models/Category");
+const Recipe = require("../../models/Recipe");
 
 exports.fetchCategory = async (categoryId, next) => {
   try {
     const category = await Category.findById(categoryId);
     return category;
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.recipesCreate = async (req, res, next) => {
+  req.body.categories = req.category._id;
+  try {
+    const newRecipe = await Recipe.create(req.body);
+    await Category.findByIdAndUpdate(req.category._id, {
+      $push: { recipes: newRecipe._id },
+    });
+    res.status(201).json(newRecipe);
   } catch (error) {
     next(error);
   }
