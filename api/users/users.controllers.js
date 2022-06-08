@@ -9,6 +9,7 @@ exports.signin = async (req, res, next) => { // add foodiez modal later !!!!!!!!
     const payload = {
       id: user.id,
       username: user.username,
+      recipes: user.recipes,
       exp: Date.now() + JWT_EXPIRATION_MS,
     };
     const token = jwt.sign(payload, JWT_SECRET);
@@ -22,6 +23,7 @@ const generateToken = (user) => {
   const payload = {
     id: user.id,
     username: user.username,
+    recipes: user.recipes,
     exp: Date.now() + JWT_EXPIRATION_MS,
   };
   const token = jwt.sign(payload, JWT_SECRET);
