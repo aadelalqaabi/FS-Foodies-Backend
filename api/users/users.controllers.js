@@ -46,9 +46,32 @@ exports.signup = async (req, res, next) => {
 
 exports.getUsers = async (req, res) => {
   try {
-    const users = await User.find();
+    const users = await User.find().populate("recipes");
     res.status(201).json(users);
   } catch (err) {
     res.status(500).json("Server Error");
+  }
+};
+
+exports.recipeAdd = async (req, res, next) => {
+  const { recipeId } = req.params; 
+
+  try {
+    await User.findByIdAndUpdate(req.user._id, {
+        $push: { recipes: recipeId }, 
+    });
+
+    res.status(201).end();
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.fetchUser = async (userId, next) => {
+  try {
+    const user = await User.findById(userId);
+    return user;
+  } catch (error) {
+    next(error);
   }
 };
