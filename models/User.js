@@ -1,4 +1,7 @@
 const mongoose = require("mongoose");
+const slug = require('mongoose-slug-generator');
+
+mongoose.plugin(slug);
 
 const UserSchema = new mongoose.Schema({
   username: String,
@@ -9,6 +12,7 @@ const UserSchema = new mongoose.Schema({
       ref: "Recipe",
     },
   ],
+  slug: { type: String, slug: "name" }
 });
 
 module.exports = mongoose.model("User", UserSchema);

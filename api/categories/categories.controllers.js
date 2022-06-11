@@ -11,7 +11,7 @@ exports.fetchCategory = async (categoryId, next) => {
 };
 
 exports.recipesCreate = async (req, res, next) => {
-  req.body.categories = req.category._id;
+  req.body.Category = req.category._id;
   try {
     if (req.file) {
       req.body.image = `media/${req.file.filename}`;
@@ -28,6 +28,9 @@ exports.recipesCreate = async (req, res, next) => {
 
 exports.categoryCreate = async (req, res, next) => {
   try {
+    if (req.file) {
+      req.body.image = `media/${req.file.filename}`;
+    }
     const newCategory = await Category.create(req.body);
     res.status(201).json(newCategory);
   } catch (error) {
