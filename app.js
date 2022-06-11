@@ -1,5 +1,6 @@
 const connectDb = require("./database");
 const express = require("express");
+const path = require("path");
 const app = express();
 const userRoutes = require("./api/users/users.routes");
 const recipeRoutes = require("./api/recipes/recipes.routes");
@@ -12,6 +13,8 @@ const { localStrategy, jwtStrategy } = require("./middleware/passport");
 connectDb();
 app.use(cors());
 app.use(express.json());
+//Create Path To Media Folder
+app.use('/media', express.static(path.join(__dirname, 'media')));
 app.use(passport.initialize());
 passport.use(localStrategy);
 passport.use(jwtStrategy);
