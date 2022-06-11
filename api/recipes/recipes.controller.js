@@ -42,3 +42,13 @@ exports.createIngredient = async (req, res, next) => {
       next(error);
     }
   };
+
+  exports.recipeUpdate = async (req, res, next) => {
+    try {
+      await Recipe.findByIdAndUpdate(req.recipe._id, req.body);
+      res.status(204).end();
+    } catch (error) {
+      next(error);
+    }
+  };
+  
