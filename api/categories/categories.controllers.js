@@ -13,6 +13,9 @@ exports.fetchCategory = async (categoryId, next) => {
 exports.recipesCreate = async (req, res, next) => {
   req.body.categories = req.category._id;
   try {
+    if (req.file) {
+      req.body.image = `media/${req.file.filename}`;
+    }
     const newRecipe = await Recipe.create(req.body);
     await Category.findByIdAndUpdate(req.category._id, {
       $push: { recipes: newRecipe._id },
