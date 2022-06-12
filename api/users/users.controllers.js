@@ -44,14 +44,7 @@ exports.signup = async (req, res, next) => {
   }
 };
 
-exports.getUsers = async (req, res) => {
-  try {
-    const users = await User.find().populate("recipes");
-    res.status(201).json(users);
-  } catch (err) {
-    res.status(500).json("Server Error");
-  }
-};
+
 
 exports.recipeAdd = async (req, res, next) => {
   const { recipeId } = req.params; 
@@ -75,3 +68,4 @@ exports.fetchUser = async (userId, next) => {
     next(error);
   }
 };
+

@@ -1,7 +1,7 @@
 const Recipe = require("../../models/Recipe");
 const Category = require("../../models/Category");
 const Ingredient = require("../../models/Ingredient");
-
+const User = require("../../models/User");
 exports.fetchRecipes = async (recipeId, next) => {
   try {
     const recipe = await Recipe.findById(recipeId);
@@ -52,3 +52,11 @@ exports.createIngredient = async (req, res, next) => {
     }
   };
   
+  exports.getUsers = async (req, res) => {
+    try {
+      const users = await User.find()
+      res.status(201).json(users);
+    } catch (err) {
+      res.status(500).json("Server Error");
+    }
+  };

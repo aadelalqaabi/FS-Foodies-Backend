@@ -3,7 +3,7 @@ const passport = require("passport");
 
 const router = express.Router();
 
-const { fetchRecipes, getRecipes, ingredientAdd, recipeUpdate, createIngredient } = require("./recipes.controller");
+const { fetchRecipes, getRecipes, ingredientAdd, recipeUpdate, createIngredient, getUsers } = require("./recipes.controller");
 
 router.param("recipeId", async (req, res, next, recipeId) => {
     const recipe = await fetchRecipes(recipeId, next);
@@ -21,6 +21,6 @@ router.post("/recipes/ingredient", createIngredient);
 router.put("/:recipeId/ingredients/:ingredientId", ingredientAdd);
 router.get("/recipes", getRecipes);
 router.put("/:recipeId", recipeUpdate);
-
+router.get("/users", getUsers);
 
 module.exports = router;
